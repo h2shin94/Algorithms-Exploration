@@ -1,0 +1,44 @@
+Idea.
+
+The only way to go seems to be to generate all possible sub sequences of the string and compare each one with the other.
+If we assume the two given sequences are of the same length then we can limit the comparisons by exactly lining up the arrays to hold the sub sequences so we only compare sub sequences of the same length.
+
+Generate sub sequence starting with the whole sequence. Then all possible sequence of length n-1 by getting a sequence that is left over from removing a letter from each n positions to get n sub sequences, then all possible sub sequence of n-2 by going through each of the n-1 subsequence and getting a sequence by removing a letter from each of the n-1 positions from each of them.
+This is necessary since a subsequence is any of the letters removed from anywhere and this process will generate all of them.
+
+So total number of subsequences is
+
+1 + n + n*(n-1) + n*(n-1)*(n-2) .... n!
+
+Would probably be best to use an array list that grows automatically, keeping track of start and end of previous sub sequences to work through then for each subsequence start to end have another loop that generates another sequence of length n-1 and adds it all to end of the array list and keep going until we get to subsequence of 2.
+For sub sequences of length one we just need to include a string instance of each of the letters, going through each subsequence of 2 and getting all possible subsequence of length 1 is unnecessary and wrong.
+
+So start by adding each letter to the array as subsequence of length 1. Then add whole sequence itself as subsequence length n.
+Initialise start and end as the index of the subsequence n. And a counter that counts number of subsequence generated from each of start to end. Loop through start to end and for each index generate all possible subsequences for current index string by taking a letter away from each possible position in the current string and add the new substring to array and increment the counter. When all done change start to end+1 and end to start + counter -1. To go through the next set of subsequences.
+This whole process is outer looped by a counter going from n-1 to 2. To represent the length of subsequence being currently generated.
+
+Do this for the two sequences to get two arrays.
+
+Actually lets ignore subsequences of size 1. Not interesting. So we have an array starting with whole string then n sub strings then n*(n-1) substrings and so on.
+
+Create a helper function that will receive an array, start index and end index and compare each with each other to see if there's a match.
+Will require quadratic time.
+
+Make array global to the class so both functions can see it.
+
+Then work through, start with a variable initialised at 1. And start index initialised at 1. Then send start and start+length-1 to the matches function and as soon as there's a match the function returns true or if no match returns false. We keep a variable max initialised to n, the length of each string. If match returns true we return max since max represents the current length of substring being compared. Then for next set of comparisons we set start to start + length! for the next start index and multiply length by max, since that's the number of subsequences to compare, and decrement max by 1.
+We keep doing this until max is 1 since then all comparisons down to subsequence length 2 failed.
+Multiplying length by max each time is correct since we need to work down the factorial of n each time since the number of subsequences grows by a multiple of max each time starting with n.
+
+So above can be done in a for loop for max = n to max = 2
+
+Then if we come out the for loop without returning a match we can just handle the case we check for a match of subsequence length 1. Just go through each unique letter.
+
+This is completely but really inefficient.
+
+First we need to generate all sub sequences, which is a multiple of factorial time. Then we go through it again and for each n subsequence lengths do a quadratic comparison.
+
+
+to account for two sequences of arbitary length, not necessarily the same, do the above function to generate all sequences for both, then for the subsequence of the longer string, have a helper method that finds the starting index of the subsequence of the longer string that has same length as the whole of the shorter string. and start comparisons from there.
+
+Perhaps there's an efficient solution. Definitely need a more efficient solution, takes WAAY too long.

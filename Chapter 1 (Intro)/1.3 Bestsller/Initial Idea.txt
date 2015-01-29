@@ -1,0 +1,13 @@
+Assume we start with a blank slate with no sales figures for any of the books. And they are in arbitrary order. 
+Millions of books. 
+
+One approach
+As soon as a new sales figures comes in, go through each sale, add it to the book sale count for the relevant book object, compare with the one above and if bigger than above book sale the move it up and do this until all book the one above is bigger than current book and do it for every sale. The previous books will already be sorted so we can do a binary search to enter the book in the correct location, not linear search.
+
+Second approach
+Or you could wait until the end of each day, add all the sales figures and sort the whole list in one go at a time when nobody is looking at the website.
+
+Worst case for First approach has max comparison of millions for each sales figure entry. Since if new sales figure is always for the book at the bottom and they all exceeded the current best seller we need to shift it all the way up, but for binary search it will be sales entry * lot of millions to do the binary search for the correct location. But this still requires shifting the others down which takes time so maybe linear is best
+
+For second if you were to sort the whole millions of books, theoretically, one comparison gets rid of half the possible permutations of the values since once a comparison is made any permutation with the two values that were compared in the wrong order becomes impossible and this makes up half the permutations, so max number of comparisons required for sorting the millions is log base 2 of the number of element. This seems better then linearly working through the book list every time a new sales figure is given. 
+

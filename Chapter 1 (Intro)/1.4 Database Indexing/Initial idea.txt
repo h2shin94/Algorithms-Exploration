@@ -1,0 +1,4 @@
+Initial idea
+
+Best way to retrieve / search a set of keys is if they are in order. We can do binary search with takes logarithmic time.
+On disk we could have an ordered set of each key, so that given the key we look I the file with the correct set of keys and binary search to find the right key, then look at the associated address location for the corresponding data value. 
